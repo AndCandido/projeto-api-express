@@ -6,6 +6,7 @@ exports.getAll = async (req, res) => {
 }
 
 exports.createTask = async (req, res) => {
-    // const createdTask = await tasksModel.createTasks()
-    return res.send(req.body, 'Olá')
+    const createdTask = await tasksModel.createTasks(req.body)
+    if(createdTask) return res.send('Task criada')
+    res.send('Titlo não fornecido')
 }
