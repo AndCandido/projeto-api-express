@@ -6,8 +6,7 @@ exports.getAllTasks = async () => {
 }
 
 exports.createTasks = async (task) => {
-    const title = task.title || null
-    if(!title) return
+    const { title } = task
     
     const query = 'INSERT INTO tasks(title, status, created_at) VALUES (?, ?, ?)'
     const dateUTC = new Date(Date.now()).toUTCString()
