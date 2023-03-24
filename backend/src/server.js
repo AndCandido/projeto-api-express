@@ -1,3 +1,6 @@
+require('dotenv').config()
 const app = require('./app')
 
-app.listen(3003, () => console.log('Rodando em http://localhost:'+3003))
+const port = process.env.PORT || 3003
+
+app.listen(port, () => console.log('Rodando em http://localhost:'+port))
