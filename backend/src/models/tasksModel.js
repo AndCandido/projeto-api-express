@@ -15,3 +15,9 @@ exports.createTasks = async (task) => {
 
     return createdTask
 }
+
+exports.deleteTask = async (taskId) => {
+    const query = 'DELETE FROM tasks WHERE id = ?'
+    const removedTask = await connection.execute(query, [taskId])
+    return removedTask
+}

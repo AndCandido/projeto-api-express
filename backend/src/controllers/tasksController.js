@@ -7,5 +7,11 @@ exports.getAll = async (req, res) => {
 
 exports.createTask = async (req, res) => {
     const createdTask = await tasksModel.createTasks(req.body)
-    res.status(201).json({ insertId: createdTask.insertId })
+    return res.status(201).json({ insertId: createdTask.insertId })
+}
+
+exports.deleteTask = async (req, res) => {
+    const { id } = req.body
+    const removedTask = await tasksModel.deleteTask(id)
+    return res.status(200).json(removedTask)
 }
