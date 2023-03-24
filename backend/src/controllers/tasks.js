@@ -7,5 +7,5 @@ exports.getAll = async (req, res) => {
 
 exports.createTask = async (req, res) => {
     // const createdTask = await tasksModel.createTasks()
-    return res.send(req)
+    return res.send(req.body, 'Olá')
 }
