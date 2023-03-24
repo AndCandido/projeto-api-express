@@ -7,5 +7,5 @@ exports.getAll = async (req, res) => {
 
 exports.createTask = async (req, res) => {
     const createdTask = await tasksModel.createTasks(req.body)
-    res.status(201)
+    res.status(201).json({ insertId: createdTask.insertId })
 }
