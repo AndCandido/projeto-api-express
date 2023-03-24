@@ -1,5 +1,5 @@
 const tasksModel = require('../models/tasksModel')
 
-exports.index = async (req, res) => {
+exports.getAll = async (req, res) => {
     res.send( await tasksModel.getAllTasks() )
 }
