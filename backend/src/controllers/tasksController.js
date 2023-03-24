@@ -11,7 +11,7 @@ exports.createTask = async (req, res) => {
 }
 
 exports.deleteTask = async (req, res) => {
-    const { id } = req.body
+    const { id } = req.params
     const removedTask = await tasksModel.deleteTask(id)
     return res.status(200).json(removedTask)
 }
