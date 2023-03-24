@@ -6,5 +6,5 @@ const tasksMiddlewares = require('./middlewares/tasksMiddlewares')
 
 router.get('/tasks', tasksControllers.getAll)
 router.post('/tasks', tasksMiddlewares.validateBody,tasksControllers.createTask)
-router.delete('/tasks', tasksControllers.deleteTask)
+router.delete('/tasks', tasksMiddlewares.validateBodyDelete,tasksControllers.deleteTask)
 module.exports = router
