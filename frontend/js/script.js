@@ -1,10 +1,41 @@
+const tBody = document.querySelector('tbody')
+const addForm = document.querySelector('.add-form')
+const inputTask = document.querySelector('.input-task')
+const url = 'http://localhost:3003/tasks'
+
 const fetchTasks = async () => {
-    const url = 'http://localhost:3003/tasks'
 
     const response = await fetch(url)
     const tasks = await response.json()
     return tasks
 }
+
+const addTask = async (e) => {
+    e.preventDefault()
+    const body = { title: inputTask.value }
+
+    const fetchOptions = {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+    }
+    await fetch(url, fetchOptions)
+    loadTasks()
+    clearInput()
+}
+
+const formateDate = (dateUTC) => {
+    const options = {
+        dateStyle: 'long',
+        timeStyle: 'short'
+    }
+    const date = new Date(dateUTC)
+    return date.toLocaleString('pt-br', options)
+}
+
+const clearInput = () => {
+    inputTask.value = ''
+} 
 
 const createElement = (tag, text = '') => {
     const newEle = document.createElement(tag)
@@ -36,7 +67,7 @@ const createBtnAction = (type) => {
     button.classList.add('btn-action')
     button.classList.add(`btn-${type}`)
     button.innerHTML = `<span class="material-symbols-outlined">${type}</span>`
-    
+
     return button
 }
 
@@ -44,7 +75,7 @@ const createRow = (task) => {
     const tableRow = createElement('tr')
 
     const tdTitle = createElement('td', task.title)
-    const tdCreatedAt = createElement('td', task.created_at)
+    const tdCreatedAt = createElement('td', formateDate(task.created_at))
     const tdStatus = createElement('td')
     const tdBtnAction = createElement('td')
 
@@ -62,12 +93,18 @@ const createRow = (task) => {
 }
 
 const loadTasks = async () => {
+    clearTable()
     const tasks = await fetchTasks()
-    const tBody = document.querySelector('tbody')
 
     for (let task of tasks) {
         tBody.appendChild(createRow(task))
     }
 }
+
+const clearTable = () => {
+    tBody.innerHTML = ''
+}
+
+addForm.addEventListener('submit', addTask)
 
 loadTasks()

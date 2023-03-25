@@ -1,6 +1,6 @@
 const validateBody = (body, key) => {
     const errors = []
-    if(body[key] === undefined) 
+    if(body[key] === undefined)
         errors.push(`The field "${key}" is required`)
     if(body[key] === '')
         errors.push(`"${key}" cannot be empty`)

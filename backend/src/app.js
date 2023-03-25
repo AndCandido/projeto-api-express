@@ -14,7 +14,7 @@ app.use(session({
     cookie: { secure: true }
 }))
 
-app.use(express.urlencoded({ extended: true }))
+app.use(express.json())
 app.use(cors())
 app.use(flash())
 app.use(router)
