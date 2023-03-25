@@ -24,6 +24,14 @@ const addTask = async (e) => {
     clearInput()
 }
 
+const deleteTask = async (e) => {
+    console.log(e)
+}
+
+const editTask = (e) => {
+
+}
+
 const formateDate = (dateUTC) => {
     const options = {
         dateStyle: 'long',
@@ -68,6 +76,14 @@ const createBtnAction = (type) => {
     button.classList.add(`btn-${type}`)
     button.innerHTML = `<span class="material-symbols-outlined">${type}</span>`
 
+    switch(type) {
+        case 'delete':
+            button.addEventListener('click', deleteTask)
+            break
+        case 'edit':
+            button.addEventListener('click', editTask)
+            break
+    }
     return button
 }
 
