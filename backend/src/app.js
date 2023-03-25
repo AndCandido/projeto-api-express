@@ -2,10 +2,10 @@ const express = require('express')
 const router = require('./router')
 const flash = require('connect-flash')
 const session = require('express-session')
+const cors = require('cors')
 const app = express()
 const port = 3003
 
-app.use(express.urlencoded({ extended: true }))
 
 app.use(session({
     secret: 'secret key',
@@ -14,6 +14,8 @@ app.use(session({
     cookie: { secure: true }
 }))
 
+app.use(express.urlencoded({ extended: true }))
+app.use(cors())
 app.use(flash())
 app.use(router)
 
