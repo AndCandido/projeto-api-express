@@ -1,9 +1,11 @@
 const express = require('express')
 const router = express.Router()
 
+const homePageController = require('./controllers/homePageController')
 const tasksControllers = require('./controllers/tasksController')
 const tasksMiddlewares = require('./middlewares/tasksMiddlewares')
 
+router.get('/', homePageController.index)
 router.get('/tasks', tasksControllers.getAll)
 router.post('/tasks', tasksMiddlewares.validateFieldTitle,tasksControllers.createTask)
 router.delete('/tasks/:id', tasksControllers.deleteTask)
