@@ -24,8 +24,8 @@ const addTask = async (e) => {
     clearInput()
 }
 
-const deleteTask = async (e) => {
-    console.log(e)
+const deleteTask = async (id) => {
+    console.log(id)
 }
 
 const editTask = (e) => {
@@ -69,7 +69,7 @@ const createSelect = () => {
     return select
 }
 
-const createBtnAction = (type) => {
+const createBtnAction = (type, taskId) => {
     const button = createElement('button')
 
     button.classList.add('btn-action')
@@ -78,10 +78,10 @@ const createBtnAction = (type) => {
 
     switch(type) {
         case 'delete':
-            button.addEventListener('click', deleteTask)
+            button.addEventListener('click', () => deleteTask(taskId))
             break
         case 'edit':
-            button.addEventListener('click', editTask)
+            button.addEventListener('click', () => editTask(taskId))
             break
     }
     return button
@@ -97,8 +97,8 @@ const createRow = (task) => {
 
     tdStatus.appendChild(createSelect())
 
-    tdBtnAction.appendChild(createBtnAction('edit'))
-    tdBtnAction.appendChild(createBtnAction('delete'))
+    tdBtnAction.appendChild(createBtnAction('edit', task.id))
+    tdBtnAction.appendChild(createBtnAction('delete', task.id))
 
     tableRow.appendChild(tdTitle)
     tableRow.appendChild(tdCreatedAt)
