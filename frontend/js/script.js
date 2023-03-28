@@ -10,9 +10,23 @@ const fetchTasks = async () => {
     return tasks
 }
 
+const isValidadeTitle = (title) => {
+    if(!title) {
+        alert('O campo deve ser preenchido')
+        return false
+    }
+
+    if(title.length > 45) {
+        alert('O campo deve conter no máximo 45 caracteres')
+        return
+    }
+    return true
+}
+
 const addTask = async (e) => {
     e.preventDefault()
     const body = { title: inputTask.value }
+    if(!isValidadeTitle(body.title)) return
 
     const options = {
         method: 'post',
