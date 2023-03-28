@@ -3,7 +3,6 @@ const addForm = document.querySelector('.add-form')
 const inputTask = document.querySelector('.input-task')
 const url = 'http://localhost:3003/tasks'
 
-
 const fetchTasks = async () => {
 
     const response = await fetch(url)
@@ -65,11 +64,12 @@ const createElement = (tag, text = '') => {
 
 const createSelect = (status) => {
     const select = createElement('select')
+    select.classList.add('select-status')
 
     const options = [
         { value: 'pendente', text: 'Pendente' },
         { value: 'em-andamento', text: 'Em andamento' },
-        { value: 'concluida', text: 'Concluída' },
+        { value: 'concluido', text: 'Concluída' },
     ]
 
     for (let option of options) {
@@ -106,14 +106,26 @@ const createEditForm = (title) => {
     return form
 }
 
+const createStatusColor = () => {
+    const div = createElement('div')
+    div.classList.add('container-status-color')
+    const span = createElement('span')
+    span.classList.add('status-color')
+    div.appendChild(span)
+    return div
+}
+
 const createRow = (task) => {
     const { id, title, created_at, status } = task
     const tableRow = createElement('tr')
 
+    const tdStatusColor = createElement('td')
     const tdTitle = createElement('td', title)
     const tdCreatedAt = createElement('td', formateDate(created_at))
     const tdStatus = createElement('td')
     const tdBtnAction = createElement('td')
+
+    tdStatusColor.appendChild(createStatusColor())
 
     const select = createSelect(status)
     select.addEventListener('change', 
@@ -140,6 +152,7 @@ const createRow = (task) => {
     tdBtnAction.appendChild(btnEdit)
     tdBtnAction.appendChild(btnDelete)
 
+    tableRow.appendChild(tdStatusColor)
     tableRow.appendChild(tdTitle)
     tableRow.appendChild(tdCreatedAt)
     tableRow.appendChild(tdStatus)

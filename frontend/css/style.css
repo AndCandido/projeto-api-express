@@ -107,3 +107,26 @@ select:hover {
 .btn-action.btn-delete {
     background-color: #f22;
 }
+  
+.container-status-color {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.status-color {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+}
+
+table tr:has(select option[value="pendente"]:checked) .status-color{
+    background-color: #dfee07;
+}
+table tr:has(select option[value="em-andamento"]:checked) .status-color{
+    background-color: #1b65d4;
+}
+table tr:has(select option[value="concluido"]:checked) .status-color {
+    background-color: #2ac537;
+}
