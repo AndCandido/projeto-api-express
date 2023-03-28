@@ -35,7 +35,7 @@ const deleteTask = async (id) => {
 const updateTask = async ({id, title, status }) => {
     const urlWithId = url + '/' + id
     const options = {
-        method: 'post',
+        method: 'put',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({title, status})
     }
@@ -43,7 +43,6 @@ const updateTask = async ({id, title, status }) => {
     await fetch(urlWithId, options)
     loadTasks()
 }
-
 
 const formateDate = (dateUTC) => {
     const options = {
@@ -64,7 +63,7 @@ const createElement = (tag, text = '') => {
     return newEle
 }
 
-const createSelect = () => {
+const createSelect = (status) => {
     const select = createElement('select')
 
     const options = [
@@ -79,25 +78,32 @@ const createSelect = () => {
         select.appendChild(op)
     }
 
+    select.value = status
+
     return select
 }
 
-const createBtnAction = (type, taskId) => {
+const createBtnAction = (type) => {
     const button = createElement('button')
 
     button.classList.add('btn-action')
     button.classList.add(`btn-${type}`)
     button.innerHTML = `<span class="material-symbols-outlined">${type}</span>`
 
-    switch(type) {
-        case 'delete':
-            button.addEventListener('click', () => deleteTask(taskId))
-            break
-        case 'edit':
-            button.addEventListener('click', () => updateTask(taskId))
-            break
-    }
     return button
+}
+
+const editTask = () => {
+
+}
+
+const createEditForm = (title) => {
+    const form = createElement('form')
+    const input = createElement('input')
+    input.value = title
+    input.classList.add('input-task')
+    form.appendChild(input)
+    return form
 }
 
 const createRow = (task) => {
@@ -109,14 +115,30 @@ const createRow = (task) => {
     const tdStatus = createElement('td')
     const tdBtnAction = createElement('td')
 
-    const select = createSelect()
+    const select = createSelect(status)
     select.addEventListener('change', 
         ({ target }) => updateTask({ ...task, status: target.value }))
 
-    tdStatus.appendChild()
+    tdStatus.appendChild(select)
 
-    tdBtnAction.appendChild(createBtnAction('edit', id))
-    tdBtnAction.appendChild(createBtnAction('delete', id))
+    const editForm = createEditForm(title)
+
+    editForm.addEventListener('submit', (e) => {
+        e.preventDefault()
+        const { value } = editForm.querySelector('input')
+        updateTask({ ...task, title: value})
+    })
+
+    const btnEdit = createBtnAction('edit')
+    const btnDelete = createBtnAction('delete')
+    btnDelete.addEventListener('click', () => deleteTask(id))
+    btnEdit.addEventListener('click', () => {
+        tdTitle.innerText = ''
+        tdTitle.appendChild(editForm)
+    })
+
+    tdBtnAction.appendChild(btnEdit)
+    tdBtnAction.appendChild(btnDelete)
 
     tableRow.appendChild(tdTitle)
     tableRow.appendChild(tdCreatedAt)
