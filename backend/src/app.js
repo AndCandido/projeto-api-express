@@ -8,7 +8,7 @@ const port = 3003
 
 
 app.use(session({
-    secret: 'secret key',
+    secret: process.env.SECRET_KEY,
     resave: false,
     saveUninitialized: true,
     cookie: { secure: true }
